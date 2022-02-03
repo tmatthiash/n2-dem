@@ -5,3 +5,4 @@
 import '@testing-library/jest-dom';
 import "regenerator-runtime";
 window.resizeTo = jest.fn();
+window.require = require

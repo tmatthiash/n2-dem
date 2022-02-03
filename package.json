@@ -18,6 +18,7 @@
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "react-scripts": "5.0.0",
+    "shx": "^0.3.4",
     "typescript": "^4.5.5",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
@@ -32,7 +33,7 @@
     "nwjs-reactbuild": "nw .",
     "prenwjs-reactbuild": "npm run build",
     "build-nw": "nwbuild --platforms win32,win64,osx64,linux64 --buildDir dist/ build/",
-    "prebuild-nw": "npm run build && cp ./src/package.json ./build"
+    "prebuild-nw": "npm run build && shx cp ./src/package.json ./build"
   },
   "eslintConfig": {
     "extends": [
