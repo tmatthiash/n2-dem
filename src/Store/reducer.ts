@@ -4,6 +4,7 @@ interface State {
     msgBlock: string[][];
     altitudeCount: number;
     message: string;
+    latLon: string;
 }
 
 export const defaultState: State = {
@@ -13,6 +14,7 @@ export const defaultState: State = {
     ],
     message: "default",
     altitudeCount: 0,
+    latLon: "",
 };
 
 export const Reducer = (state: State = defaultState, action: Action): State => {
@@ -26,6 +28,11 @@ export const Reducer = (state: State = defaultState, action: Action): State => {
             return {
                 ...state,
                 message: action.message,
+            };
+        case "SET_LATLON":
+            return {
+                ...state,
+                latLon: action.latLon,
             };
         case "INCREMENT_COUNT":
             return {

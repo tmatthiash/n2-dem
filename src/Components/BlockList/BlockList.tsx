@@ -8,12 +8,15 @@ export const BlockList = () => {
     const msgBlock = useAppSelector((state) => state.msgBlock);
     const altCount = useAppSelector((state) => state.altitudeCount);
     const message = useAppSelector((state) => state.message);
+    const latLon = useAppSelector((state) => state.latLon);
     window.resizeTo(700, 700);
+
 
     return (
         <div className="message-block-holder">
             <div>{altCount}</div>
-            <div>{message}</div>
+            <div style={{ whiteSpace: "pre" }}>{message}</div>
+            <div style={{ whiteSpace: "pre" }}>{latLon}</div>
             {msgBlock.map((block) => {
                 return (
                     <div

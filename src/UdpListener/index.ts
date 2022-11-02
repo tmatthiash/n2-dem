@@ -8,6 +8,7 @@ import {
 } from "./formatters/BufferFormatter";
 import { sliceIntoNSizeChunks } from "./formatters/ArraySplitters";
 import { store } from "..";
+import { handleLatLon } from "./formatters/Handlers/LatLon";
 
 const dgram = window.require("dgram");
 
@@ -57,6 +58,8 @@ server.on("message", (msg: Buffer, rinfo: any) => {
         const command = lineSeven.slice(11, 22);
         if (command === "01111100110") {
             store.dispatch({ type: "INCREMENT_COUNT" });
+
+            handleLatLon(binaryPackets[i]);
             // store.dispatch({ type: "SET_MESSAGE", message: lineSeven });
             const unalteredAltitudeValue = ~~parseInt(
                 binaryPackets[i][18].slice(11, 27),
@@ -90,7 +93,7 @@ server.on("message", (msg: Buffer, rinfo: any) => {
                 type: "SET_MESSAGE",
                 message: `Altitude is maybe: ${
                     unalteredAltitudeValue * 4
-                }ft, also ${
+                }ft, \nalso ${
                     unalteredVelocityEastValue * 1.91e-6
                 } ft/sec E \n also ${
                     unalteredVelocityNorthValue * 1.91e-6
