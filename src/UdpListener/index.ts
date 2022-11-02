@@ -58,13 +58,13 @@ server.on("message", (msg: Buffer, rinfo: any) => {
         if (command === "01111100110") {
             store.dispatch({ type: "INCREMENT_COUNT" });
             // store.dispatch({ type: "SET_MESSAGE", message: lineSeven });
-            const unalteredAltitudeValue = parseInt(
-                binaryPackets[i][19].slice(11, 27),
+            const unalteredAltitudeValue = ~~parseInt(
+                binaryPackets[i][18].slice(11, 27),
                 2
             );
 
-            const velocityEastMSW = binaryPackets[i][20].slice(11, 27);
-            const velocityEastLSW = binaryPackets[i][21].slice(11, 27);
+            const velocityEastMSW = binaryPackets[i][19].slice(11, 27);
+            const velocityEastLSW = binaryPackets[i][20].slice(11, 27);
 
             const combinedVelocityEast = velocityEastMSW + velocityEastLSW;
             const unalteredVelocityEastValue = ~~parseInt(
@@ -72,20 +72,47 @@ server.on("message", (msg: Buffer, rinfo: any) => {
                 2
             );
 
+            const velocityNorthMSW = binaryPackets[i][21].slice(11, 27);
+            const velocityNorthLSW = binaryPackets[i][22].slice(11, 27);
+
+            const combinedVelocityNorth = velocityNorthMSW + velocityNorthLSW;
+            const unalteredVelocityNorthValue = ~~parseInt(
+                combinedVelocityNorth,
+                2
+            );
+
+            const totalSpeed = Math.sqrt(
+                Math.pow(unalteredVelocityEastValue * 1.91e-6, 2) +
+                    Math.pow(unalteredVelocityNorthValue * 1.91e-6, 2)
+            );
+
             store.dispatch({
                 type: "SET_MESSAGE",
                 message: `Altitude is maybe: ${
                     unalteredAltitudeValue * 4
-                }ft, also ${unalteredVelocityEastValue} ft/sec`,
+                }ft, also ${
+                    unalteredVelocityEastValue * 1.91e-6
+                } ft/sec E \n also ${
+                    unalteredVelocityNorthValue * 1.91e-6
+                } ft/sec N \n total: ${totalSpeed}`,
             });
+            // store.dispatch({
+            //     type: "SET_MESSAGE",
+            //     message: `Altitude is maybe: ${
+            //         unalteredAltitudeValue * 4
+            //     }ft, also ${binaryPackets[i][18]}`,
+            // });
         }
-        // store.dispatch({
-        //     type: "SET_MESSAGE",
-        //     message: JSON.stringify(`${lineSeven} subset: ${command}`),
-        // });
-
-        // if (lineSeven === "00110111101") {
+        // if (command === "01111101001") {
         //     store.dispatch({ type: "INCREMENT_COUNT" });
+        //     const unalteredAltitudeValue = ~~parseInt(
+        //         binaryPackets[i][19].slice(11, 27),
+        //         2
+        //     );
+        //     store.dispatch({
+        //         type: "SET_MESSAGE",
+        //         message: `Altitude is maybe: ${unalteredAltitudeValue * 4}ft`,
+        //     });
         // }
     }
 
