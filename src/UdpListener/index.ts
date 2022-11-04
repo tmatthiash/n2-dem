@@ -1,4 +1,5 @@
-import { handleCallsign } from './formatters/Handlers/Callsign';
+import { twoComplementConvert } from "./formatters/converters/TwoComplementConvert";
+import { handleCallsign } from "./formatters/Handlers/Callsign";
 import { handleFuel } from "./formatters/Handlers/Fuel";
 // import dgram from "dgram";
 import {
@@ -7,7 +8,7 @@ import {
 } from "./formatters/BufferFormatter";
 import { store } from "..";
 import { handleLatLon } from "./formatters/Handlers/LatLon";
-import { handleTemperature } from './formatters/Handlers/Temperature';
+import { handleTemperature } from "./formatters/Handlers/Temperature";
 
 const dgram = window.require("dgram");
 
@@ -26,27 +27,24 @@ server.on("message", (msg: Buffer, rinfo: any) => {
             store.dispatch({ type: "INCREMENT_COUNT" });
 
             handleLatLon(binaryPackets[i]);
-            const unalteredAltitudeValue = ~~parseInt(
-                binaryPackets[i][18].slice(11, 27),
-                2
+            const unalteredAltitudeValue = twoComplementConvert(
+                binaryPackets[i][18].slice(11, 27)
             );
 
             const velocityEastMSW = binaryPackets[i][19].slice(11, 27);
             const velocityEastLSW = binaryPackets[i][20].slice(11, 27);
 
             const combinedVelocityEast = velocityEastMSW + velocityEastLSW;
-            const unalteredVelocityEastValue = ~~parseInt(
-                combinedVelocityEast,
-                2
+            const unalteredVelocityEastValue = twoComplementConvert(
+                combinedVelocityEast
             );
 
             const velocityNorthMSW = binaryPackets[i][21].slice(11, 27);
             const velocityNorthLSW = binaryPackets[i][22].slice(11, 27);
 
             const combinedVelocityNorth = velocityNorthMSW + velocityNorthLSW;
-            const unalteredVelocityNorthValue = ~~parseInt(
-                combinedVelocityNorth,
-                2
+            const unalteredVelocityNorthValue = twoComplementConvert(
+                combinedVelocityNorth
             );
 
             const totalSpeed = Math.sqrt(
@@ -72,7 +70,7 @@ server.on("message", (msg: Buffer, rinfo: any) => {
         //     handleCallsign(binaryPackets[i])
         // }
         if (command === "11100111000") {
-            handleTemperature(binaryPackets[i])
+            handleTemperature(binaryPackets[i]);
         }
     }
 });
