@@ -9,6 +9,9 @@ export const BlockList = () => {
     const altCount = useAppSelector((state) => state.altitudeCount);
     const message = useAppSelector((state) => state.message);
     const latLon = useAppSelector((state) => state.latLon);
+    const fuel = useAppSelector((state) => state.fuel);
+    const callsign = useAppSelector((state) => state.callsign);
+    const temperature = useAppSelector((state) => state.temperature);
     window.resizeTo(700, 700);
 
 
@@ -17,6 +20,9 @@ export const BlockList = () => {
             <div>{altCount}</div>
             <div style={{ whiteSpace: "pre" }}>{message}</div>
             <div style={{ whiteSpace: "pre" }}>{latLon}</div>
+            <div style={{ whiteSpace: "pre" }}>{fuel}</div>
+            <div style={{ whiteSpace: "pre" }}>{callsign}</div>
+            <div style={{ whiteSpace: "pre" }}>{temperature}</div>
             {msgBlock.map((block) => {
                 return (
                     <div

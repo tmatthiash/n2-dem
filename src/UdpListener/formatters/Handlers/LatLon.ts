@@ -5,13 +5,13 @@ export const handleLatLon = (packet: string[]) => {
     const latitudeLSW = packet[15].slice(11, 27);
     const combinedLatitude = latitudeMSW + latitudeLSW;
     const latSemiCircle = ~~parseInt(combinedLatitude, 2);
-    const latDegrees = (latSemiCircle * 180) / 2147483648;
+    const latDegrees = ((latSemiCircle * 180) / 2147483648).toFixed(7)
 
     const longitudeMSW = packet[16].slice(11, 27);
     const longitudeLSW = packet[17].slice(11, 27);
     const combinedLongitude = longitudeMSW + longitudeLSW;
     const lonSemiCircle = ~~parseInt(combinedLongitude, 2);
-    const lonDegrees = (lonSemiCircle * 180) / 2147483648;
+    const lonDegrees = ((lonSemiCircle * 180) / 2147483648).toFixed(7);
 
     store.dispatch({
         type: "SET_LATLON",
