@@ -5,4 +5,5 @@ export type Action =
     | {type: "SET_FUEL"; fuel: string }
     | {type: "SET_CALLSIGN"; callsign: string }
     | {type: "SET_TEMPERATURE"; temperature: string }
+    | {type: "SET_HEADING"; heading: string }
     | { type: "INCREMENT_COUNT" }

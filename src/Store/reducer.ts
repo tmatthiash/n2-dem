@@ -8,6 +8,7 @@ interface State {
     fuel: string;
     callsign: string;
     temperature: string;
+    heading: string;
 }
 
 export const defaultState: State = {
@@ -20,7 +21,9 @@ export const defaultState: State = {
     latLon: "",
     fuel: "empty",
     callsign: "no callsign",
-    temperature: "temp"
+    temperature: "temp",
+    heading: "360"
+
 };
 
 export const Reducer = (state: State = defaultState, action: Action): State => {
@@ -54,6 +57,11 @@ export const Reducer = (state: State = defaultState, action: Action): State => {
             return {
                 ...state,
                 temperature: action.temperature,
+            };
+        case "SET_HEADING":
+            return {
+                ...state,
+                heading: action.heading,
             };
         case "INCREMENT_COUNT":
             return {

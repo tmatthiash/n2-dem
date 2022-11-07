@@ -12,6 +12,7 @@ export const BlockList = () => {
     const fuel = useAppSelector((state) => state.fuel);
     const callsign = useAppSelector((state) => state.callsign);
     const temperature = useAppSelector((state) => state.temperature);
+    const heading = useAppSelector((state) => state.heading);
     window.resizeTo(700, 700);
 
 
@@ -23,6 +24,7 @@ export const BlockList = () => {
             <div style={{ whiteSpace: "pre" }}>{fuel}</div>
             <div style={{ whiteSpace: "pre" }}>{callsign}</div>
             <div style={{ whiteSpace: "pre" }}>{temperature}</div>
+            <div style={{ whiteSpace: "pre" }}>{heading}</div>
             {msgBlock.map((block) => {
                 return (
                     <div

@@ -1,3 +1,4 @@
+import { handleHeading } from './formatters/Handlers/Heading';
 import { twoComplementConvert } from "./formatters/converters/TwoComplementConvert";
 import { handleCallsign } from "./formatters/Handlers/Callsign";
 import { handleFuel } from "./formatters/Handlers/Fuel";
@@ -71,6 +72,9 @@ server.on("message", (msg: Buffer, rinfo: any) => {
         // }
         if (command === "11100111000") {
             handleTemperature(binaryPackets[i]);
+        }
+        if(command === "10000100001") {
+            handleHeading(binaryPackets[i])
         }
     }
 });
